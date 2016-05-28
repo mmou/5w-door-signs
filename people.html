@@ -1,0 +1,148 @@
+<html>
+
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,700italic,700,500,400italic,500italic,300,300italic' rel='stylesheet' type='text/css'>
+
+<style type="text/css">
+	
+body {
+	font-family: 'Ubuntu', sans-serif;
+}	
+
+#name {
+	font-weight:700;
+	font-size: 4.8em;
+	margin-right:24px;
+}
+
+#kerberos {
+	font-weight:300;
+	font-size: 4.8em;
+}
+
+#room {
+	font-weight:400;
+	font-size: 3em;	
+	margin-right:48px;	
+}
+
+#year {
+	font-weight:400;
+	font-size: 3em;	
+	margin-right:48px;	
+	font-style: italic;
+}
+
+#major {
+	font-weight:400;
+	font-size: 3em;	
+	font-style: italic;
+}
+
+#bucket {
+	width:340px;
+	float:left;
+	position:relative;
+
+	font-weight:300;
+	font-size: 1.8em;		
+}
+
+#container3 {
+	margin-top:48px;
+	font-weight:500;	
+	font-size:2em;
+}
+
+#picture-container {
+	left:30px;
+	top:-20px;
+	float:left;
+	position:relative;
+}
+
+#picture {
+	border-width:0px;
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+<div id="container1"><span id="name"></span> <span id="kerberos"></span></div>
+<div id="container2"><span id="room"></span> <span id="year"></span> <span id="major"></span></div>
+<div id="container3">my bucket list:</div>
+<div id="container4">
+	<ol id="bucket"></ol>
+	<div id="picture-container"><img id="picture"></img></div>
+</div>
+
+</body>
+
+
+<script>
+people = {
+  "mmou": {
+    "room":"",
+    "name":"",
+    "kerberos":"",
+    "year":"",
+    "major":"",
+    "picture":"",
+    "bucket_list":["", "", ""]
+  }
+}
+
+var kerberos = location.search.split('kerberos=')[1]
+
+if (people[kerberos]) {
+	person = people[kerberos]
+	$("#name").html(person.name.toLowerCase())
+	$("#room").html(person.room)
+	$("#kerberos").html(person.kerberos.toLowerCase())
+	
+	year = person.year
+	if (year == "G") {
+		$("#year").html("grad")						
+	} else if (year != "G") {
+		$("#year").html("class of " + year)				
+	}
+	if (year != "2019") {
+		$("#major").html("course " + person.major)
+	}
+
+	var bucketString = "";
+	for (var i in person.bucket_list) {
+		bucketString += "<li>" + person.bucket_list[i] 
+	}
+	$("#bucket").html(bucketString);
+
+
+	var adjustSize = function() {
+		width = $("#picture").width()
+		console.log(width)	
+		if (width > 500) {
+			$("#picture").attr("height", 400*500/width)
+		}			
+	}
+
+	if (person.picture.length > 0) {
+		$("#picture").attr("src", person.picture) 
+		$("#picture").attr("height", 400)
+		width = $("#picture").width()		
+		console.log(width);
+		setTimeout(adjustSize, 100)
+	}
+}
+
+</script>
+
+
+
+</html>
